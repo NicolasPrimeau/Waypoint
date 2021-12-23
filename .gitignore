@@ -1,0 +1,5 @@
+.idea
+venv
+
+.chalice/deployments/
+.chalice/venv/
