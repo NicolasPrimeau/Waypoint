@@ -11,6 +11,7 @@ class TradeSignal(dict):
     def new(cls, ticker: models.Ticker):
         return cls({
             "ticker": str(ticker),
+            "chart_link": f"https://finance.yahoo.com/chart/{str(ticker)}",
             "signals": []
         })
 
@@ -59,8 +60,8 @@ def process_trade_signals():
         ))
 
     if email_event.signals:
-        sns.publish(CONFIG.SNS_EMAIL_TOPIC_ARN, email_event)
+        sns.publish_pretty(CONFIG.SNS_EMAIL_TOPIC_ARN, email_event)
     else:
-        sns.publish(CONFIG.SNS_EMAIL_TOPIC_ARN, events.SNSEvent({
+        sns.publish_pretty(CONFIG.SNS_EMAIL_TOPIC_ARN, events.SNSEvent({
             "message": "Nothing to report!"
         }))
