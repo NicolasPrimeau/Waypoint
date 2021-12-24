@@ -15,7 +15,7 @@ class Ticker:
         self.exchange = exchange
 
     def __str__(self):
-        return f"{self.ticker}:{str(self.exchange)}" if self.exchange else self.ticker
+        return f"{self.ticker}.{str(self.exchange)}" if self.exchange else self.ticker
 
     def __repr__(self):
         return str(self)
