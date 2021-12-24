@@ -41,4 +41,4 @@ def handle_refresh_eod_data_request(event):
 @app.schedule(chalice.Cron(minutes=0, hours=11, day_of_month='*', month='*', day_of_week='?', year='*'))
 def refresh_data(event):
     now = datetime.datetime.utcnow()
-    eod_prices.trigger_refresh_event_requests(from_=now - datetime.timedelta(weeks=52*3), to=now)
+    eod_prices.trigger_refresh_event_requests(from_=now - datetime.timedelta(days=2), to=now)
