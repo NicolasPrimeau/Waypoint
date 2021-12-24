@@ -74,7 +74,11 @@ def run_analysis(event: events.EodUpdateSNSEvent):
         (now - FIRST_PERIOD_START_DELTA, now - FIRST_PERIOD_END_DELTA),
         (now - SECOND_PERIOD_START_DELTA, now - SECOND_PERIOD_END_DELTA)
     ).detect(document)
-    if potential_gain < MIN_PERCENTAGE:
+
+    if potential_gain < 0:
+        _logger.info(f"No drop ({potential_gain})")
+        return 
+    elif potential_gain < MIN_PERCENTAGE:
         _logger.info(f"Drop is too small ({potential_gain})")
         return
 
