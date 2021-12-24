@@ -2,6 +2,7 @@
 venv
 
 __pycache__
+data/
 
 .chalice/deployments/
 .chalice/venv/
