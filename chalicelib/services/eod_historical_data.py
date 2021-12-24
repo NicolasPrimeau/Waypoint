@@ -64,5 +64,4 @@ def get_eod_data(ticker: models.Ticker, from_: "datetime.datetime", to: "datetim
         _logger.error(f"{response.status_code}: {response.text}")
         raise RuntimeError()
 
-    data = response.json()
-    return list(map(EodDataEntry, data.get("data")))
+    return list(map(EodDataEntry, response.json()))

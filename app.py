@@ -29,4 +29,4 @@ def handle_eod_update_event(event):
 @app.schedule(chalice.Cron(minutes=0, hours=11, day_of_month='*', month='*', day_of_week='?', year='*'))
 def refresh_data(event):
     now = datetime.datetime.utcnow()
-    eod_prices.update_all_to_etf_prices(from_=now - datetime.timedelta(days=2), to=now)
+    eod_prices.update_all_to_etf_prices(from_=now - datetime.timedelta(weeks=52*3), to=now)

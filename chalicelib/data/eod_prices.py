@@ -21,7 +21,7 @@ class EodDataFile(dict):
 
     @property
     def data(self) -> List[eod_historical_data.EodDataEntry]:
-        return list(self.get("data"))
+        return list(map(eod_historical_data.EodDataEntry, self.get("data")))
 
     @data.setter
     def data(self, values: List[eod_historical_data.EodDataEntry]):
@@ -29,8 +29,9 @@ class EodDataFile(dict):
 
 
 class EodUpdateSNSEvent(models.SNSEvent):
-    def new(self, ticker: models.Ticker):
-        self["ticker"] = str(ticker)
+    @classmethod
+    def new(cls, ticker: models.Ticker):
+        cls({"ticker": str(ticker)})
 
     @property
     def ticker(self) -> models.Ticker:
@@ -48,19 +49,19 @@ def update_to_etf_price(ticker: models.Ticker, from_, to):
     s3_key = f"{CONFIG.S3_TICKET_INFO_FOLDER_KEY}/{str(ticker)}"
     raw_data = s3.get_file_data(CONFIG.S3_BUCKET, s3_key)
     if raw_data:
-        existing_data = EodDataFile(json.loads(raw_data))
+        document = EodDataFile(json.loads(raw_data))
     else:
-        existing_data = EodDataFile.new(ticker)
+        document = EodDataFile.new(ticker)
 
     eod_data = list(eod_historical_data.get_eod_data(ticker, from_=from_, to=to))
-    combined_data = _combine_data(existing_data, eod_data)
-    s3.put_file_data(CONFIG.S3_BUCKET, s3_key, json.dumps(combined_data))
+    document.data = _combine_data(document.data, eod_data)
+    s3.put_file_data(CONFIG.S3_BUCKET, s3_key, json.dumps(document))
 
 
 def _combine_data(
-        existing_data: EodDataFile, new_data: List[eod_historical_data.EodDataEntry]
+        existing_data: List[eod_historical_data.EodDataEntry], new_data: List[eod_historical_data.EodDataEntry]
 ) -> Iterable[eod_historical_data.EodDataEntry]:
-    data = existing_data.data
+    data = list(existing_data)
     dates = set(entry.date for entry in data)
 
     for entry in new_data:
