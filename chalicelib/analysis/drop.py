@@ -77,7 +77,7 @@ def run_analysis(event: events.EodUpdateSNSEvent):
 
     if potential_gain < 0:
         _logger.info(f"No drop ({potential_gain})")
-        return 
+        return
     elif potential_gain < MIN_PERCENTAGE:
         _logger.info(f"Drop is too small ({potential_gain})")
         return
