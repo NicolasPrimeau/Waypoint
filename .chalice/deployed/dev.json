@@ -3,7 +3,7 @@
     {
       "name": "managed-layer",
       "resource_type": "lambda_layer",
-      "layer_version_arn": "arn:aws:lambda:ca-central-1:357603364432:layer:waypoint-dev-managed-layer:20"
+      "layer_version_arn": "arn:aws:lambda:ca-central-1:357603364432:layer:waypoint-dev-managed-layer:21"
     },
     {
       "name": "handle_eod_update_event",
