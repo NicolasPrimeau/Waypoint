@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Dict
+from typing import Dict
 
 from chalicelib import models
 from chalicelib.services import eod_historical_data

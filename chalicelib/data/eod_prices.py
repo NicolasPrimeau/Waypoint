@@ -13,7 +13,7 @@ _logger = logging.getLogger()
 class EodDataFile(dict):
     @classmethod
     def new(cls, ticker: models.Ticker):
-        return cls({"ticker": str(ticker), "data": list()})
+        return cls({"ticker": str(ticker), "data": []})
 
     @property
     def ticker(self) -> models.Ticker:

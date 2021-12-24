@@ -11,7 +11,7 @@ class TradeSignal(dict):
     def new(cls, ticker: models.Ticker):
         return cls({
             "ticker": str(ticker),
-            "signals": list()
+            "signals": []
         })
 
     @property

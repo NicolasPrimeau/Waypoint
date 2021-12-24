@@ -18,8 +18,7 @@ def get_file_data(s3_bucket: str, s3_key: str) -> Optional:
         if e.response['Error']['Code'] in ('AccessDenied', 'NoSuchKey'):
             _logger.info(f"s3://{s3_bucket}/{s3_key} does not exist")
             return None
-        else:
-            raise e
+        raise e
 
 
 def put_file_data(s3_bucket: str, s3_key: str, data):

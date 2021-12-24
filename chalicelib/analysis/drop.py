@@ -2,7 +2,7 @@ import logging
 from typing import Tuple, Iterable, List
 import datetime
 
-from chalicelib import events, models
+from chalicelib import events
 from chalicelib.analysis import detectors, stream_filters, set_filter
 from chalicelib.config import CONFIG
 from chalicelib.data import eod_prices
@@ -78,7 +78,8 @@ def run_analysis(event: events.EodUpdateSNSEvent):
     if potential_gain < 0:
         _logger.info(f"No drop ({potential_gain})")
         return
-    elif potential_gain < MIN_PERCENTAGE:
+
+    if potential_gain < MIN_PERCENTAGE:
         _logger.info(f"Drop is too small ({potential_gain})")
         return
 

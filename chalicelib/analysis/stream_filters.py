@@ -1,6 +1,5 @@
 import abc
 from typing import Iterable
-import datetime
 
 from chalicelib.services import eod_historical_data
 

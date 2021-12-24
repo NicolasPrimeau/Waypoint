@@ -1,8 +1,8 @@
 import logging
 from typing import List
 
-import requests
 import datetime
+import requests
 
 from chalicelib import models
 from chalicelib.config import CONFIG
@@ -60,7 +60,8 @@ def get_eod_data(ticker: models.Ticker, from_: "datetime.datetime", to: "datetim
     if response.status_code == 404:
         _logger.error(f"Unknown ticker: {ticker}")
         return []
-    elif 300 <= response.status_code:
+
+    if 300 <= response.status_code:
         _logger.error(f"{response.status_code}: {response.text}")
         raise RuntimeError()
 
