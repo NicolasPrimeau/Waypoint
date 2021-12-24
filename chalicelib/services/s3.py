@@ -15,7 +15,7 @@ def get_file_data(s3_bucket: str, s3_key: str) -> Optional:
         return s3.Bucket(s3_bucket).Object(s3_key).get()['Body'].read().decode("utf-8")
     except botocore.exceptions.ClientError as e:
         _logger.info(e.response)
-        if e.response['Error']['Code'] == 'NoSuchKey':
+        if e.response['Error']['Code'] in ('AccessDenied', 'NoSuchKey'):
             _logger.info(f"s3://{s3_bucket}/{s3_key} does not exist")
             return None
         else:

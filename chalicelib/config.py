@@ -24,6 +24,7 @@ class AppConfig:
     S3_TO_ETF_LIST_KEY = "to_etf_list.csv"
     S3_TICKET_INFO_FOLDER_KEY = "ticker_info"
 
+    SQS_EOD_DATA_UPDATE_QUEUE_URL = "https://sqs.ca-central-1.amazonaws.com/357603364432/WAYPOINT_REFRESH_EOD_DATA"
     SNS_EOD_DATA_UPDATE_TOPIC_ARN = "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EOD_DATA_UPDATE"
 
     def __init__(self):

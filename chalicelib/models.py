@@ -19,7 +19,3 @@ class Ticker:
 
     def __repr__(self):
         return str(self)
-
-
-class SNSEvent(dict):
-    pass
