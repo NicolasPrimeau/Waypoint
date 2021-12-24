@@ -22,10 +22,6 @@ SECOND_PERIOD_START_DELTA = datetime.timedelta(weeks=2)
 SECOND_PERIOD_END_DELTA = datetime.timedelta(seconds=0)
 
 
-class NoDataError(RuntimeError):
-    pass
-
-
 class DropDetector(detectors.Detector):
     def __init__(
             self,
@@ -49,8 +45,7 @@ class DropDetector(detectors.Detector):
                 "second_range": self.compare_range
             })
             return 0.0
-
-        drop_percentage = abs((second_average - first_average) / first_average)
+        drop_percentage = (second_average - first_average) / first_average
         return -drop_percentage
 
 
@@ -62,7 +57,12 @@ def _get_avg_in_range(data, from_date=None, to_date=None):
 
 
 def run_analysis(event: events.EodUpdateSNSEvent):
-    document = _get_document(event.ticker)
+    _logger.info(f"Running drop detection on {event.ticker}")
+    document = eod_prices.get_eod_price_file(event.ticker)
+
+    if not document or not document.data:
+        _logger.error(f"No data for {event.ticker}")
+        return
 
     data = list(_filter_data(document.data))
     if not _meets_requirements(data):
@@ -86,15 +86,6 @@ def run_analysis(event: events.EodUpdateSNSEvent):
         CONFIG.SNS_TRADE_SIGNAL_TOPIC_ARN,
         events.TradeSignalEvent.new(ticker=event.ticker, predicted_change=potential_gain, source="DropDetection")
     )
-
-
-def _get_document(ticker: models.Ticker) -> eod_prices.EodDataFile:
-    _logger.info(f"Running drop detection on {ticker}")
-    document = eod_prices.get_eod_price_file(ticker)
-    if not document or not document.data:
-        _logger.error(f"No data for {ticker}")
-        raise NoDataError(ticker)
-    return document
 
 
 def _filter_data(data: Iterable[eod_historical_data.EodDataEntry]) -> Iterable[eod_historical_data.EodDataEntry]:
