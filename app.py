@@ -28,12 +28,13 @@ def handle_eod_update_event(event):
     })
 
 
-@app.on_sqs_message(queue=CONFIG.SQS_EOD_DATA_UPDATE_QUEUE_URL.split("/")[-1])
+@app.on_sqs_message(queue=CONFIG.SQS_EOD_DATA_UPDATE_QUEUE_URL.split("/")[-1], batch_size=1)
 def handle_refresh_eod_data_request(event):
     _logger.info("Received EOD data refresh event", extra={
         "event": event.to_dict()
     })
-    eod_prices.handle_refresh_event_request(eod_prices.EodDataRefreshSQSEvent(json.loads(event.body)))
+    for record in event:
+        eod_prices.handle_refresh_event_request(eod_prices.EodDataRefreshSQSEvent(json.loads(record.body)))
 
 
 # 06h00 ET
