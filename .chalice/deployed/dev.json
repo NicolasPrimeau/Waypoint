@@ -1,0 +1,40 @@
+{
+  "resources": [
+    {
+      "name": "handle_eod_update_event",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev-handle_eod_update_event"
+    },
+    {
+      "name": "handle_eod_update_event-sns-subscription",
+      "resource_type": "sns_event",
+      "topic": "WAYPOINT_EOD_DATA_UPDATE",
+      "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev-handle_eod_update_event",
+      "subscription_arn": "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EOD_DATA_UPDATE:8295921d-53d0-45ec-8667-0321329ee009",
+      "topic_arn": "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EOD_DATA_UPDATE"
+    },
+    {
+      "name": "refresh_data",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev-refresh_data"
+    },
+    {
+      "name": "refresh_data-event",
+      "resource_type": "cloudwatch_event",
+      "rule_name": "waypoint-dev-refresh_data-event"
+    },
+    {
+      "name": "api_handler",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev"
+    },
+    {
+      "name": "rest_api",
+      "resource_type": "rest_api",
+      "rest_api_id": "jmgfweqjsl",
+      "rest_api_url": "https://jmgfweqjsl.execute-api.ca-central-1.amazonaws.com/api/"
+    }
+  ],
+  "schema_version": "2.0",
+  "backend": "api"
+}

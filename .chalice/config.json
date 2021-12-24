@@ -3,9 +3,12 @@
   "app_name": "waypoint",
   "stages": {
     "dev": {
+      "environment_variables": {
+        "stage": "dev"
+      },
       "api_gateway_stage": "api",
-      "": "",
-      "iam_role_arn": "",
+      "manage_iam_role": false,
+      "iam_role_arn": "arn:aws:iam::357603364432:role/Waypoint-RunetimeRole"
     }
   }
 }
