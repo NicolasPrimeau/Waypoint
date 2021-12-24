@@ -12,6 +12,6 @@ class SQSEvent(dict):
 
 
 def publish(queue_url: str, event: SQSEvent):
-    _logger.info("Publishing event", extra={"queue_url": queue_url, "event": event})
+    _logger.info("Publishing SQS event", extra={"queue_url": queue_url, "event": event})
     client = boto3.client('sqs')
-    client.publish(QueueUrl=queue_url, MessageBody=json.dumps(event))
+    client.send_message(QueueUrl=queue_url, MessageBody=json.dumps(event))

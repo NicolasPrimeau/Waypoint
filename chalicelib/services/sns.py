@@ -12,6 +12,6 @@ class SNSEvent(dict):
 
 
 def publish(topic: str, event: SNSEvent):
-    _logger.info("Publishing event", extra={"topic": topic, "event": event})
+    _logger.info("Publishing SNS event", extra={"topic": topic, "event": event})
     client = boto3.client('sns')
     client.publish(TopicArn=topic, Message=json.dumps(event))
