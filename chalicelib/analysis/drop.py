@@ -12,7 +12,7 @@ _logger = logging.getLogger()
 
 
 MIN_SPREAD = 2
-MIN_AVERAGE_VOLUME = 20000
+MIN_AVERAGE_VOLUME = 10000
 MIN_PERCENTAGE = 0.025
 
 FIRST_PERIOD_START_DELTA = datetime.timedelta(weeks=26)

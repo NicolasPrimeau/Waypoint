@@ -38,7 +38,7 @@ def handle_refresh_event_request(event: events.EodDataRefreshSQSEvent):
 
 
 def _get_eod_file_key(ticker: models.Ticker) -> str:
-    return f"{CONFIG.S3_TICKET_INFO_FOLDER_KEY}/{str(ticker)}"
+    return f"{CONFIG.S3_TICKET_INFO_FOLDER_KEY}/{str(ticker).upper()}"
 
 
 def get_eod_price_file(ticker: models.Ticker) -> Optional[EodDataFile]:
