@@ -16,7 +16,7 @@ def publish(queue_url: str, event: events.SQSEvent):
 
 def iterate_messages(queue_url: str):
     sqs = boto3.resource('sqs')
-    queue = sqs.Queue(QueueUrl=queue_url)
+    queue = sqs.Queue(queue_url)
     messages = queue.receive_messages()
     while messages:
         for message in messages:

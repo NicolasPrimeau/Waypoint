@@ -58,4 +58,9 @@ def process_trade_signals():
             creation_date=event.creation_datetime
         ))
 
-    sns.publish(CONFIG.SNS_EMAIL_TOPIC_ARN, email_event)
+    if email_event.signals:
+        sns.publish(CONFIG.SNS_EMAIL_TOPIC_ARN, email_event)
+    else:
+        sns.publish(CONFIG.SNS_EMAIL_TOPIC_ARN, events.SNSEvent({
+            "message": "Nothing to report!"
+        }))
