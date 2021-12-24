@@ -11,8 +11,8 @@
       "iam_role_arn": "arn:aws:iam::357603364432:role/Waypoint-RunetimeRole",
       "automatic_layer": true,
       "lambda_functions": {
-        "foo": {
-          "lambda_timeout": 300
+        "handle_refresh_eod_data_request": {
+          "reserved_concurrency": 5
         }
       }
     }

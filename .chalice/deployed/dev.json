@@ -3,7 +3,7 @@
     {
       "name": "managed-layer",
       "resource_type": "lambda_layer",
-      "layer_version_arn": "arn:aws:lambda:ca-central-1:357603364432:layer:waypoint-dev-managed-layer:2"
+      "layer_version_arn": "arn:aws:lambda:ca-central-1:357603364432:layer:waypoint-dev-managed-layer:11"
     },
     {
       "name": "handle_eod_update_event",
@@ -17,6 +17,19 @@
       "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev-handle_eod_update_event",
       "subscription_arn": "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EOD_DATA_UPDATE:8295921d-53d0-45ec-8667-0321329ee009",
       "topic_arn": "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EOD_DATA_UPDATE"
+    },
+    {
+      "name": "handle_refresh_eod_data_request",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev-handle_refresh_eod_data_request"
+    },
+    {
+      "name": "handle_refresh_eod_data_request-sqs-event-source",
+      "resource_type": "sqs_event",
+      "queue_arn": "arn:aws:sqs:ca-central-1:357603364432:WAYPOINT_REFRESH_EOD_DATA",
+      "event_uuid": "970f1183-3cf3-44c7-83b3-eeab96ce8a80",
+      "queue": "WAYPOINT_REFRESH_EOD_DATA",
+      "lambda_arn": "arn:aws:lambda:ca-central-1:357603364432:function:waypoint-dev-handle_refresh_eod_data_request"
     },
     {
       "name": "refresh_data",
