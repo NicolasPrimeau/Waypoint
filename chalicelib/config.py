@@ -25,7 +25,11 @@ class AppConfig:
     S3_TICKET_INFO_FOLDER_KEY = "ticker_info"
 
     SQS_EOD_DATA_UPDATE_QUEUE_URL = "https://sqs.ca-central-1.amazonaws.com/357603364432/WAYPOINT_REFRESH_EOD_DATA"
+    SQS_TRADE_SIGNAL_COMMS_QUEUE_URL = "https://sqs.ca-central-1.amazonaws.com/357603364432/WAYPOINT_TRADE_SIGNAL_COMMS"
+
+    SNS_TRADE_SIGNAL_TOPIC_ARN = "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_TRADE_SIGNALS"
     SNS_EOD_DATA_UPDATE_TOPIC_ARN = "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EOD_DATA_UPDATE"
+    SNS_EMAIL_TOPIC_ARN = "arn:aws:sns:ca-central-1:357603364432:WAYPOINT_EMAIL"
 
     def __init__(self):
         self.load_secrets(f"{AppConfig.STAGE}/{AppConfig.APP_NAME}")
