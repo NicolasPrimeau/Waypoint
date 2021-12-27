@@ -56,14 +56,23 @@ def update_to_etf_eod_price(ticker: models.Ticker, from_, to):
         document = EodDataFile.new(ticker)
 
     eod_data = list(eod_historical_data.get_eod_data(ticker, from_=from_, to=to))
-    document.data = _combine_data(document.data, eod_data)
+    if not eod_data:
+        _logger.info("No new EOD data")
+        return
+
+    combined_data = _combine_data(document.data, eod_data)
+    if len(combined_data) == len(document.data):
+        _logger.info("No new EOD data")
+        return
+
+    document.data = combined_data
     put_eod_price_file(document)
     sns.publish(CONFIG.SNS_EOD_DATA_UPDATE_TOPIC_ARN, events.EodUpdateSNSEvent.new(ticker))
 
 
 def _combine_data(
         existing_data: List[eod_historical_data.EodDataEntry], new_data: List[eod_historical_data.EodDataEntry]
-) -> Iterable[eod_historical_data.EodDataEntry]:
+) -> List[eod_historical_data.EodDataEntry]:
     data = list(existing_data)
     dates = set(entry.date for entry in data)
 
